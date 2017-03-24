@@ -104,7 +104,7 @@ static NSArray *sj_parametersForInvocation(NSInvocation *invocation) {
 }
 
 static void SJForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, NSInvocation *invocation) {
-    NSArray *events = selectorEvents()[sj_strForClassAndSelector(object_getClass(assignSlf), invocation.selector)];
+    NSArray *events = selectorEvents()[sj_strForClassAndSelector(assignSlf.class, invocation.selector)];
     [events enumerateObjectsUsingBlock:^(NSString *eventName, NSUInteger idx, BOOL *stop) {
         NSDictionary *detail = eventDetails()[eventName];
         NSArray *argumentsArray = sj_parametersForInvocation(invocation);
