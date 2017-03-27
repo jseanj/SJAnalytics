@@ -66,7 +66,7 @@
                    SJAnalyticsDetails: @[
                            @{
                                SJAnalyticsEvent: @"btnTappedEvent",
-                               SJAnalyticsSelector: NSStringFromSelector(@selector(btnTapped:)),
+                               SJAnalyticsSelector: @"btnTapped:",
                                SJAnalyticsParameters:^NSDictionary*(ViewController *instance, NSArray *params) {
                                     return @{};
                                 }
