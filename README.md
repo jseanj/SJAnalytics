@@ -17,7 +17,7 @@
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
-		[[SJAnalytics shared] configure:
+  [[SJAnalytics shared] configure:
      @{
        SJAnalyticsMethodCall: @[
                @{
