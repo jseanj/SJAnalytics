@@ -1,15 +1,7 @@
 #import "SJAnalytics.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
-
-NSString * const SJAnalyticsMethodCall = @"methodCall";
-NSString * const SJAnalyticsUIControl = @"UIControl";
-NSString * const SJAnalyticsClass = @"class";
-NSString * const SJAnalyticsSelector = @"selector";
-NSString * const SJAnalyticsDetails = @"details";
-NSString * const SJAnalyticsParameters = @"parameters";
-NSString * const SJAnalyticsShouldExecute = @"shouldExecute";
-NSString * const SJAnalyticsEvent = @"event";
+#import "UIApplication+SJAnalytics.h"
 
 static NSMutableDictionary *eventDetails() {
     static NSMutableDictionary *dict;
@@ -27,6 +19,17 @@ static NSMutableDictionary *selectorEvents() {
         dict = [[NSMutableDictionary alloc] init];
     });
     return dict;
+}
+
+static void sj_swizzSelector(Class class, SEL swizzledSelector, SEL originalSelector) {
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+    BOOL success = class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
+    if (success) {
+        class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    }
 }
 
 static SEL sj_selectorForOriginSelector(SEL selector) {
@@ -131,13 +134,21 @@ static void SJForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
 
 - (void)configure:(NSDictionary *)configurationDictionary provider:(id<SJAnalyticsProvider>)provider {
     self.provider = provider;
-    NSArray *trackedMethodEventClasses = configurationDictionary[SJAnalyticsMethodCall];
-    [trackedMethodEventClasses enumerateObjectsUsingBlock:^(NSDictionary *eventDictionary, NSUInteger idx, BOOL *stop) {
-        [self __addMethodEventAnalyticsHook:eventDictionary];
+    NSArray *trackedMethodCallEventClasses = configurationDictionary[SJAnalyticsMethodCall];
+    [trackedMethodCallEventClasses enumerateObjectsUsingBlock:^(NSDictionary *eventDictionary, NSUInteger idx, BOOL *stop) {
+        [self __addMethodCallEventAnalyticsHook:eventDictionary];
+    }];
+    NSArray *trackedUIControlEventClasses = configurationDictionary[SJAnalyticsUIControl];
+    if (trackedUIControlEventClasses.count) {
+        sj_swizzSelector([UIApplication class], @selector(sj_sendAction:to:from:forEvent:), @selector(sendAction:to:from:forEvent:));
+        [UIApplication sharedApplication].provider = self.provider;
+    }
+    [trackedUIControlEventClasses enumerateObjectsUsingBlock:^(NSDictionary *eventDictionary, NSUInteger idx, BOOL *stop) {
+        [self __addUIControlEventAnalyticsHook:eventDictionary];
     }];
 }
 
-- (void)__addMethodEventAnalyticsHook:(NSDictionary *)eventDictionary {
+- (void)__addMethodCallEventAnalyticsHook:(NSDictionary *)eventDictionary {
     Class klass = eventDictionary[SJAnalyticsClass];
     [eventDictionary[SJAnalyticsDetails] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
         NSString *selectorName = dict[SJAnalyticsSelector];
@@ -163,6 +174,24 @@ static void SJForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
         if (!events) events = [NSMutableArray new];
         [events addObject:dict[SJAnalyticsEvent]];
         [selectorEvents() setObject:events forKey:selectorKey];
+    }];
+}
+
+- (void)__addUIControlEventAnalyticsHook:(NSDictionary *)eventDictionary {
+    Class klass = eventDictionary[SJAnalyticsClass];
+    [eventDictionary[SJAnalyticsDetails] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
+        NSString *selectorName = dict[SJAnalyticsSelector];
+        SEL originSelector = NSSelectorFromString(selectorName);
+        
+        NSMutableDictionary *detailDict = [dict mutableCopy];
+        [detailDict removeObjectForKey:SJAnalyticsEvent];
+        [[UIApplication sharedApplication].eventDetails setObject:detailDict forKey:dict[SJAnalyticsEvent]];
+        
+        NSString *selectorKey = sj_strForClassAndSelector(klass, originSelector);
+        NSMutableArray *events = [UIApplication sharedApplication].selectorEvents[selectorKey];
+        if (!events) events = [NSMutableArray new];
+        [events addObject:dict[SJAnalyticsEvent]];
+        [[UIApplication sharedApplication].selectorEvents setObject:events forKey:selectorKey];
     }];
 }
 

@@ -60,7 +60,20 @@
                    ]
                 }
        ],
-       SJAnalyticsUIControl: @[]
+       SJAnalyticsUIControl: @[
+               @{
+                   SJAnalyticsClass:ViewController.class,
+                   SJAnalyticsDetails: @[
+                           @{
+                               SJAnalyticsEvent: @"btnTappedEvent",
+                               SJAnalyticsSelector: NSStringFromSelector(@selector(btnTapped:)),
+                               SJAnalyticsParameters:^NSDictionary*(ViewController *instance, NSArray *params) {
+                                    return @{};
+                                }
+                            }
+                    ]
+                }
+       ]
     } provider:self];
     
     return YES;

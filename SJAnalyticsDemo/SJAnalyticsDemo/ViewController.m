@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // SJAnalyticsMethodCall
     [self testNoParams];
     [self testParams:@"test"];
     [self testBlockSuccess:^{
@@ -25,14 +26,10 @@
     } failure:^{
         NSLog(@"failure");
     }];
+    
+    // SJAnalyticsUIControl
+    
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (void)testNoParams {
     NSLog(@"testNoParams");
@@ -50,6 +47,10 @@
     if (failure) {
         failure();
     }
+}
+
+- (IBAction)btnTapped:(id)sender {
+    NSLog(@"btnTapped");
 }
 
 @end

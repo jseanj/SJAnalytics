@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A81DA6E51E89057D00B81195 /* UIApplication+SJAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A81DA6E01E88EAE500B81195 /* UIApplication+SJAnalytics.m */; };
+		A81DA6E61E89058000B81195 /* SJAnalyticsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A81DA6E41E89030700B81195 /* SJAnalyticsConstants.m */; };
+		A81DA6E71E89058400B81195 /* SJAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399CAC1E8518A400396620 /* SJAnalytics.m */; };
 		A8399C791E85182900396620 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C781E85182900396620 /* main.m */; };
 		A8399C7C1E85182900396620 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C7B1E85182900396620 /* AppDelegate.m */; };
 		A8399C7F1E85182900396620 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C7E1E85182900396620 /* ViewController.m */; };
@@ -15,7 +18,6 @@
 		A8399C871E85182900396620 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8399C851E85182900396620 /* LaunchScreen.storyboard */; };
 		A8399C921E85182900396620 /* SJAnalyticsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C911E85182900396620 /* SJAnalyticsDemoTests.m */; };
 		A8399C9D1E85182900396620 /* SJAnalyticsDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C9C1E85182900396620 /* SJAnalyticsDemoUITests.m */; };
-		A8399CAF1E8518A400396620 /* SJAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399CAC1E8518A400396620 /* SJAnalytics.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A81DA6DF1E88EAE500B81195 /* UIApplication+SJAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+SJAnalytics.h"; sourceTree = "<group>"; };
+		A81DA6E01E88EAE500B81195 /* UIApplication+SJAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+SJAnalytics.m"; sourceTree = "<group>"; };
+		A81DA6E21E88F99B00B81195 /* SJAnalyticsProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SJAnalyticsProvider.h; sourceTree = "<group>"; };
+		A81DA6E31E89030700B81195 /* SJAnalyticsConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SJAnalyticsConstants.h; sourceTree = "<group>"; };
+		A81DA6E41E89030700B81195 /* SJAnalyticsConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SJAnalyticsConstants.m; sourceTree = "<group>"; };
 		A8399C741E85182900396620 /* SJAnalyticsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SJAnalyticsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8399C781E85182900396620 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A8399C7A1E85182900396620 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -149,6 +156,11 @@
 			children = (
 				A8399CAB1E8518A400396620 /* SJAnalytics.h */,
 				A8399CAC1E8518A400396620 /* SJAnalytics.m */,
+				A81DA6E21E88F99B00B81195 /* SJAnalyticsProvider.h */,
+				A81DA6E31E89030700B81195 /* SJAnalyticsConstants.h */,
+				A81DA6E41E89030700B81195 /* SJAnalyticsConstants.m */,
+				A81DA6DF1E88EAE500B81195 /* UIApplication+SJAnalytics.h */,
+				A81DA6E01E88EAE500B81195 /* UIApplication+SJAnalytics.m */,
 			);
 			name = codes;
 			path = ../../codes;
@@ -287,10 +299,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A81DA6E51E89057D00B81195 /* UIApplication+SJAnalytics.m in Sources */,
 				A8399C7F1E85182900396620 /* ViewController.m in Sources */,
-				A8399CAF1E8518A400396620 /* SJAnalytics.m in Sources */,
+				A81DA6E61E89058000B81195 /* SJAnalyticsConstants.m in Sources */,
 				A8399C7C1E85182900396620 /* AppDelegate.m in Sources */,
 				A8399C791E85182900396620 /* main.m in Sources */,
+				A81DA6E71E89058400B81195 /* SJAnalytics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
