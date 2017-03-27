@@ -50,11 +50,7 @@ static NSString *sj_controlStrForClassAndSelector(Class klass, SEL selector) {
     objc_setAssociatedObject(self, &SJAnalyticsSelectorEventsKey, selectorEvents, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)sj_sendAction:(SEL)action to:(id)target from:(id)sender forEvent:(UIEvent *)event {
-    NSLog(@"action: %@", NSStringFromSelector(action));
-    NSLog(@"target: %@", target);
-    NSLog(@"from: %@", sender);
-    
+- (BOOL)sj_sendAction:(SEL)action to:(id)target from:(id)sender forEvent:(UIEvent *)event {    
     NSArray *events = self.selectorEvents[sj_controlStrForClassAndSelector([target class], action)];
     [events enumerateObjectsUsingBlock:^(NSString *eventName, NSUInteger idx, BOOL *stop) {
         NSDictionary *detail = self.eventDetails[eventName];
