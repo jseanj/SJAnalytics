@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import "SJAnalytics.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <SJAnalyticsProvider>
 
 @end
 
@@ -17,7 +19,56 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[SJAnalytics shared] configure:
+     @{
+       SJAnalyticsMethodCall: @[
+               @{
+                   SJAnalyticsClass:ViewController.class,
+                   SJAnalyticsDetails: @[
+                           @{
+                               SJAnalyticsEvent: @"testNoParamsEvent",
+                               SJAnalyticsSelector: NSStringFromSelector(@selector(testNoParams)),
+                               SJAnalyticsShouldExecute:^BOOL(ViewController *instance, NSArray *params) {
+                                    return NO;
+                               },
+                               SJAnalyticsParameters:^NSDictionary*(ViewController *instance, NSArray *params) {
+                                    return @{};
+                               }
+                            },
+                           @{
+                               SJAnalyticsEvent: @"testParamsEvent",
+                               SJAnalyticsSelector: NSStringFromSelector(@selector(testParams:)),
+                               SJAnalyticsParameters:^NSDictionary*(ViewController *instance, NSArray *params) {
+                                    return @{};
+                               }
+                            },
+                           @{
+                               SJAnalyticsEvent: @"testBlockSuccessEvent",
+                               SJAnalyticsSelector: NSStringFromSelector(@selector(testBlockSuccess:failure:)),
+                               SJAnalyticsShouldExecute:^BOOL(ViewController *instance, NSArray *params) {
+                                    if ([params[0] isKindOfClass:[NSNull class]]) {
+                                        return NO;
+                                    } else {
+                                        return YES;
+                                    }
+                               },
+                               SJAnalyticsParameters:^NSDictionary*(ViewController *instance, NSArray *params) {
+                                    return @{};
+                               }
+                            }
+                   ]
+                }
+       ],
+       SJAnalyticsUIControl: @[]
+    } provider:self];
+    
     return YES;
+}
+
+#pragma mark - SJAnalyticsProvider
+- (void)event:(NSString *)event withParameters:(NSDictionary *)parameters {
+    NSLog(@"event: %@, and parameters: %@", event, parameters);
 }
 
 

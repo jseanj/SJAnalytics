@@ -16,7 +16,6 @@
 		A8399C921E85182900396620 /* SJAnalyticsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C911E85182900396620 /* SJAnalyticsDemoTests.m */; };
 		A8399C9D1E85182900396620 /* SJAnalyticsDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399C9C1E85182900396620 /* SJAnalyticsDemoUITests.m */; };
 		A8399CAF1E8518A400396620 /* SJAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399CAC1E8518A400396620 /* SJAnalytics.m */; };
-		A8399CB01E8518A400396620 /* SJAnalyticsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A8399CAE1E8518A400396620 /* SJAnalyticsProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +54,6 @@
 		A8399C9E1E85182900396620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8399CAB1E8518A400396620 /* SJAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAnalytics.h; sourceTree = "<group>"; };
 		A8399CAC1E8518A400396620 /* SJAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAnalytics.m; sourceTree = "<group>"; };
-		A8399CAD1E8518A400396620 /* SJAnalyticsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAnalyticsProvider.h; sourceTree = "<group>"; };
-		A8399CAE1E8518A400396620 /* SJAnalyticsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAnalyticsProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +149,6 @@
 			children = (
 				A8399CAB1E8518A400396620 /* SJAnalytics.h */,
 				A8399CAC1E8518A400396620 /* SJAnalytics.m */,
-				A8399CAD1E8518A400396620 /* SJAnalyticsProvider.h */,
-				A8399CAE1E8518A400396620 /* SJAnalyticsProvider.m */,
 			);
 			name = codes;
 			path = ../../codes;
@@ -296,7 +291,6 @@
 				A8399CAF1E8518A400396620 /* SJAnalytics.m in Sources */,
 				A8399C7C1E85182900396620 /* AppDelegate.m in Sources */,
 				A8399C791E85182900396620 /* main.m in Sources */,
-				A8399CB01E8518A400396620 /* SJAnalyticsProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +522,7 @@
 				A8399CA31E85182900396620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A8399CA41E85182900396620 /* Build configuration list for PBXNativeTarget "SJAnalyticsDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +531,7 @@
 				A8399CA61E85182900396620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A8399CA71E85182900396620 /* Build configuration list for PBXNativeTarget "SJAnalyticsDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +540,7 @@
 				A8399CA91E85182900396620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

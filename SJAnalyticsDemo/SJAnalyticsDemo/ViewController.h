@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+- (void)testNoParams;
+- (void)testParams:(NSString *)param;
+- (void)testBlockSuccess:(void(^)())success failure:(void(^)())failure;
 
 @end
 

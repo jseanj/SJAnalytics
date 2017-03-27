@@ -1,7 +1,6 @@
 #import "SJAnalytics.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import "SJAnalyticsProvider.h"
 
 NSString * const SJAnalyticsMethodCall = @"methodCall";
 NSString * const SJAnalyticsUIControl = @"UIControl";
@@ -104,14 +103,14 @@ static NSArray *sj_parametersForInvocation(NSInvocation *invocation) {
 }
 
 static void SJForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, NSInvocation *invocation) {
-    NSArray *events = selectorEvents()[sj_strForClassAndSelector(assignSlf.class, invocation.selector)];
+    NSArray *events = selectorEvents()[sj_strForClassAndSelector([assignSlf class], invocation.selector)];
     [events enumerateObjectsUsingBlock:^(NSString *eventName, NSUInteger idx, BOOL *stop) {
         NSDictionary *detail = eventDetails()[eventName];
         NSArray *argumentsArray = sj_parametersForInvocation(invocation);
         BOOL (^shouldExecuteBlock)(id object, NSArray *parameters) = detail[SJAnalyticsShouldExecute];
         NSDictionary *(^parametersBlock)(id object, NSArray *parameters) = detail[SJAnalyticsParameters];
         if (shouldExecuteBlock == nil || shouldExecuteBlock(assignSlf, argumentsArray)) {
-            [[SJAnalyticsProvider shared] event:eventName withParameters:parametersBlock(assignSlf, argumentsArray)];
+            [[SJAnalytics shared].provider event:eventName withParameters:parametersBlock(assignSlf, argumentsArray)];
         }
     }];
     SEL newSelector = sj_selectorForOriginSelector(invocation.selector);
@@ -130,7 +129,8 @@ static void SJForwardInvocation(__unsafe_unretained id assignSlf, SEL selector, 
     return analytics;
 }
 
-- (void)configure:(NSDictionary *)configurationDictionary {
+- (void)configure:(NSDictionary *)configurationDictionary provider:(id<SJAnalyticsProvider>)provider {
+    self.provider = provider;
     NSArray *trackedMethodEventClasses = configurationDictionary[SJAnalyticsMethodCall];
     [trackedMethodEventClasses enumerateObjectsUsingBlock:^(NSDictionary *eventDictionary, NSUInteger idx, BOOL *stop) {
         [self __addMethodEventAnalyticsHook:eventDictionary];
